@@ -3,13 +3,10 @@ import axios from "axios";
 import VideoCard from "./VideoCard";
 
 const Main = () => {
-  const config = {
-    headers: { "Access-Control-Allow-Origin": "*" },
-  };
   const [videos, setVideos] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:8762/video/all", config).then((res) => {
+    axios.get("http://localhost:8762/video/all").then((res) => {
       setVideos(res.data);
     });
   }, []);
