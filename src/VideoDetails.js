@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const VideoDetails = (props) => {
-  const id = props.key;
+  const id = props.match.params.videoId;
   const [video, setVideo] = useState(null);
+
+  console.log(video);
 
   useEffect(() => {
     axios.get(`http://localhost:8762/video/${id}`).then((res) => {
@@ -16,13 +18,17 @@ const VideoDetails = (props) => {
     <div>
       {video ? (
         <div>
-          <iframe width="420" height="300" src={video.url}></iframe>
-          <p></p>
-
-          <Link to={`/details/${video.id}`} key={video.id}>
-            {video.name}
-          </Link>
-          <p></p>
+          <iframe width="600" height="420" src={video.url}></iframe>
+          <h1>{video.name}</h1>
+          <br></br>
+          {video.recommendations.map((rec, index) => (
+            <div>
+              <h2>
+                {rec.comment}
+                <br></br> Rating:{rec.rating}
+              </h2>
+            </div>
+          ))}
         </div>
       ) : (
         <p>Loading video data...</p>
